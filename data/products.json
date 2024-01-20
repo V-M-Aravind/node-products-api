@@ -9,11 +9,7 @@
     { "id": 7, "title": "Mouse", "price": 100, "qty": 74 },
     { "id": 8, "title": "Plug", "price": 10, "qty": 20 },
     { "id": 9, "title": "Data Cable", "price": 21, "qty": 100 },
-    { "id": 10, "title": "Diary", "qty": 1, "price": 20 },
-    { "id": 11, "title": "Diary", "qty": 33, "price": 32 },
-    { "id": 12, "title": "Diary", "qty": 33, "price": 32 },
-    { "id": 13, "title": "Diary", "qty": 33, "price": 32 },
-    { "id": 14, "title": "Chair", "price": 16, "qty": 85 }
+    { "id": 10, "title": "Diary", "qty": 1, "price": 20 }
   ],
-  "lastPrId": 14
+  "lastPrId": 10
 }
