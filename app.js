@@ -9,13 +9,18 @@ const pageNotFoundRoutes = require("./routes/pageNotFound");
 
 dotenv.config();
 const app = express();
+
 const PORT = process.env.PORT || 3000;
+//setting view with EJS template
 app.set("view engine", "ejs");
 
+//setting public directory for assets
 app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.urlencoded({ extended: false }));
+
+//setting body parser for parsing incoming json body from requests
 app.use(bodyParser.json());
 
+//routes
 app.use(userRoutes);
 app.use("/admin", adminRoutes);
 app.use(pageNotFoundRoutes);

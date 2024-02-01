@@ -6,6 +6,7 @@
 
 .form-control {
     margin: 1rem 0;
+    max-width: 20rem;
 }
 
 .form-control label,
@@ -33,4 +34,18 @@ button:hover,
 button:active {
     background-color: #3e00a1;
     color: white;
+}
+.notification{
+    padding: 1rem ;
+    max-width: 20rem;
+}
+
+.success{
+    background-color: rgb(33, 195, 33);
+}
+.error{
+    background-color: rgb(236, 68, 68);
+}
+.hidden{
+    display: none;
 }

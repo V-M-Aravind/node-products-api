@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/icons/favicon.ico">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/product.css">
+    <title>Update Product</title>
+</head>
+
+<body>
+    <%- include('includes/header'); -%>
+        <% if (product) { %>
+            <main>
+                <form class="product-form" id="product-form" onsubmit="onUpdateProduct(event)">
+                    <div class="form-control">
+                        <label for="title">Title</label>
+                        <input type="text" name="title" id="title" required value="<%= product.title %>">
+                        <label for="price">Price</label>
+                        <input type="number" name="price" id="price" step=".01" required value="<%= product.price %>">
+                        <label for="qty">Quantity</label>
+                        <input type="number" name="qty" id="qty" required value="<%= product.qty %>">
+                        <label for="imgUrl">Image Url</label>
+                        <input type="text" name="imgUrl" id="imgUrl" required value="<%= product.imgUrl %>">
+                        <label for="description">Description</label>
+                        <textarea id="description" name="description" rows="4" cols="50"
+                            required><%= product.description %></textarea>
+                    </div>
+                    <button type="submit">Update Product</button>
+                </form>
+            </main>
+            <script>
+                function onUpdateProduct(e) {
+                    e.preventDefault();
+                    const title = document.getElementById("title").value;
+                    const qty = document.getElementById("qty").value;
+                    const price = document.getElementById("price").value;
+                    const imgUrl = document.getElementById("imgUrl");
+                    const description = document.getElementById("description").value;
+                    const id = `<%- product.id %>`;
+                    fetch("/admin/products", {
+                        method: "PUT", headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ id, title, qty, price, description }),
+                    }).then(response =>
+                        response.json().then(data => ({ "status": response.status, "ok": response.ok, data }))
+                    ).then(result => {
+                        if (!result.ok) {
+                            throw Error(result?.data?.message || 'Something went wrong.');
+                        }
+                        window.location.replace(`/products/<%- product.id %>`)
+                    }).catch(e => { console.error(e) })
+                }
+            </script>
+            <% } else { %>
+                <br />
+                <div class="product-form">
+                    <p class="product-form">Product Not Found</p>
+                    <button onclick="goBack()">Go Back</button>
+                </div>
+
+                <script>
+                    const goBack = () => {
+                        window.location.replace("/admin/update-product")
+                    }
+                </script>
+                <% } %>
+
+</body>
+
+</html>
