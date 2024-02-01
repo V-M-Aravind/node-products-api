@@ -1,5 +1,3 @@
-// const readDataFile = require("../utilities/readDataFile");
-// const writeDataFile = require("../utilities/writeDataFile");
 const { writeDataFile, readDataFile } = require("../utilities/accessDataFile");
 class Product {
   constructor(id, title, price, qty, imgUrl, description) {
