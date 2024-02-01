@@ -1,8 +1,5 @@
 const Product = require("../models/product");
 
-const getHomePage = (_, res) => {
-  return res.render("home");
-};
 const getAddProductPage = (_, res) => {
   return res.render("add-product");
 };
@@ -22,7 +19,6 @@ const getUpdateFinalProductPage = (req, res) => {
 };
 
 module.exports = {
-  getHomePage,
   getAddProductPage,
   getUpdateInitialProductPage,
   getUpdateFinalProductPage,

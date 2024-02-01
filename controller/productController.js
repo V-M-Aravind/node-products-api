@@ -1,5 +1,3 @@
-const readDataFile = require("../utilities/readDataFile");
-const writeDataFile = require("../utilities/writeDataFile");
 const Product = require("../models/product");
 
 const PRODUCTS_NOT_FOUND = {
@@ -46,7 +44,9 @@ const addProduct = async (req, res) => {
       null,
       req.body.title,
       req.body.price,
-      req.body.qty
+      req.body.qty,
+      req.body.imgUrl,
+      req.body.description
     );
     product = product.save();
     res.json(product);
@@ -62,7 +62,9 @@ const updateProduct = (req, res) => {
       Number(req.body.id),
       req.body.title,
       req.body.price,
-      req.body.qty
+      req.body.qty,
+      req.body.imgUrl,
+      req.body.description
     );
     product.save();
     res.json(product);

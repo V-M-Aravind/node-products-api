@@ -13,4 +13,16 @@ function readDataFile() {
     throw err;
   }
 }
-module.exports = readDataFile;
+
+function writeDataFile(data) {
+  try {
+    fs.writeFileSync(
+      path.join(rootDir, "data", "products.json"),
+      JSON.stringify(data)
+    );
+  } catch (err) {
+    throw err;
+  }
+}
+
+module.exports = { readDataFile, writeDataFile };
