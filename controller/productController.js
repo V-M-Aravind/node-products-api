@@ -17,9 +17,10 @@ const SERVER_ERROR = {
   status: "SERVER_ERROR",
 };
 
-const getAllProducts = (_, res) => {
+const getAllProducts = async (_, res) => {
   try {
-    const products = Product.getAllProducts();
+    const products = await Product.find();
+    if (products.length === 0) return res.status(500).json(PRODUCTS_NOT_FOUND);
     return res.json(products);
   } catch (err) {
     console.error(err);
@@ -27,10 +28,11 @@ const getAllProducts = (_, res) => {
   }
 };
 
-const getProductById = (req, res) => {
+const getProductById = async (req, res) => {
   try {
-    const prdId = Number(req.params.id);
-    const product = Product.getProduct(prdId);
+    const prdId = req.params.id;
+    const product = await Product.findById(prdId);
+    if (!product) return res.status(500).json(PRODUCT_NOT_FOUND);
     return res.json(product);
   } catch (err) {
     console.error(err);
@@ -40,15 +42,34 @@ const getProductById = (req, res) => {
 
 const addProduct = async (req, res) => {
   try {
-    let product = new Product(
-      null,
-      req.body.title,
-      req.body.price,
-      req.body.qty,
-      req.body.imgUrl,
-      req.body.description
-    );
-    product = product.save();
+    const product = await Product.create({
+      title: req.body.title,
+      price: req.body.price,
+      qty: req.body.qty,
+      imgUrl: req.body.imgUrl,
+      description: req.body.description,
+    });
+
+    res.status(201).json(product);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(SERVER_ERROR);
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    const _id = req.body._id;
+    const prodDetails = {
+      title: req.body.title,
+      price: req.body.price,
+      qty: req.body.qty,
+      imgUrl: req.body.imgUrl,
+      description: req.body.description,
+    };
+    let product = await Product.findByIdAndUpdate(_id, prodDetails, {
+      returnDocument: "after",
+    });
     res.json(product);
   } catch (err) {
     console.error(err);
@@ -56,28 +77,10 @@ const addProduct = async (req, res) => {
   }
 };
 
-const updateProduct = (req, res) => {
+const deleteProduct = async (req, res) => {
   try {
-    const product = new Product(
-      Number(req.body.id),
-      req.body.title,
-      req.body.price,
-      req.body.qty,
-      req.body.imgUrl,
-      req.body.description
-    );
-    product.save();
-    res.json(product);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json(SERVER_ERROR);
-  }
-};
-
-const deleteProduct = (req, res) => {
-  try {
-    const prdId = Number(req.params.id);
-    Product.deleteProduct(prdId);
+    const prdId = req.params.id;
+    const pr = await Product.findByIdAndDelete(prdId);
     return res.json(PRODUCT_DELETED);
   } catch (error) {
     console.log(error);

@@ -39,12 +39,12 @@
                     const price = document.getElementById("price").value;
                     const imgUrl = document.getElementById("imgUrl").value;
                     const description = document.getElementById("description").value;
-                    const id = `<%- product.id %>`;
+                    const _id = `<%- product._id %>`;
                     fetch("/admin/products", {
                         method: "PUT", headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({ id, title, qty, price, description }),
+                        body: JSON.stringify({ _id, title, qty, price, description, imgUrl }),
                     }).then(response =>
                         response.json().then(data => ({ "status": response.status, "ok": response.ok, data }))
                     ).then(result => {

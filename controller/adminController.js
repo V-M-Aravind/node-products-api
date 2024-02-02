@@ -7,10 +7,9 @@ const getUpdateInitialProductPage = (_, res) => {
   return res.render("update-product-initial");
 };
 
-const getUpdateFinalProductPage = (req, res) => {
-  const prdId = Number(req.params.id);
+const getUpdateFinalProductPage = async (req, res) => {
   try {
-    const product = Product.getProduct(prdId);
+    const product = await Product.findById(req.params.id);
     return res.render("update-product-final", { product: product });
   } catch (error) {
     console.error(error);

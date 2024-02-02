@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoDBConnect = require("./utilities/database");
 const path = require("path");
 const dotenv = require("dotenv");
 
@@ -19,12 +20,15 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //setting body parser for parsing incoming json body from requests
 app.use(bodyParser.json());
-
 //routes
 app.use(userRoutes);
 app.use("/admin", adminRoutes);
 app.use(pageNotFoundRoutes);
 
-app.listen(PORT, () => {
-  console.log("Listening to port: ", PORT);
-});
+mongoDBConnect()
+  .then((client) => {
+    app.listen(PORT, () => {
+      console.log("Listening to port: ", PORT);
+    });
+  })
+  .catch((e) => console.log("Server error :", e));
