@@ -37,7 +37,7 @@
                     const title = document.getElementById("title").value;
                     const qty = document.getElementById("qty").value;
                     const price = document.getElementById("price").value;
-                    const imgUrl = document.getElementById("imgUrl");
+                    const imgUrl = document.getElementById("imgUrl").value;
                     const description = document.getElementById("description").value;
                     const id = `<%- product.id %>`;
                     fetch("/admin/products", {
