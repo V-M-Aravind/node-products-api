@@ -1,9 +1,5 @@
 const Product = require("../models/product");
 
-const PRODUCTS_NOT_FOUND = {
-  message: "No Products Found",
-  status: "NO_PRODUCTS_FOUND",
-};
 const PRODUCT_NOT_FOUND = {
   message: "No Product Found",
   status: "NO_PRODUCT_FOUND",
@@ -20,11 +16,10 @@ const SERVER_ERROR = {
 const getAllProducts = async (_, res) => {
   try {
     const products = await Product.find();
-    if (products.length === 0) return res.status(500).json(PRODUCTS_NOT_FOUND);
     return res.json(products);
   } catch (err) {
     console.error(err);
-    return res.status(500).json(PRODUCTS_NOT_FOUND);
+    return res.status(500).json(SERVER_ERROR);
   }
 };
 
@@ -32,11 +27,11 @@ const getProductById = async (req, res) => {
   try {
     const prdId = req.params.id;
     const product = await Product.findById(prdId);
-    if (!product) return res.status(500).json(PRODUCT_NOT_FOUND);
+    if (!product) return res.status(404).json(PRODUCT_NOT_FOUND);
     return res.json(product);
   } catch (err) {
     console.error(err);
-    return res.status(500).json(PRODUCT_NOT_FOUND);
+    return res.status(500).json(SERVER_ERROR);
   }
 };
 
@@ -59,17 +54,15 @@ const addProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const _id = req.body._id;
-    const prodDetails = {
-      title: req.body.title,
-      price: req.body.price,
-      qty: req.body.qty,
-      imgUrl: req.body.imgUrl,
-      description: req.body.description,
-    };
-    let product = await Product.findByIdAndUpdate(_id, prodDetails, {
-      returnDocument: "after",
-    });
+    const prdId = req.params.id;
+    let product = await Product.findById(prdId);
+    if (!product) return res.status(404).json(PRODUCT_NOT_FOUND);
+    product.title = req.body.title;
+    product.price = req.body.price;
+    product.qty = req.body.qty;
+    product.imgUrl = req.body.imgUrl;
+    product.description = req.body.description;
+    await product.save();
     res.json(product);
   } catch (err) {
     console.error(err);
@@ -80,10 +73,11 @@ const updateProduct = async (req, res) => {
 const deleteProduct = async (req, res) => {
   try {
     const prdId = req.params.id;
-    const pr = await Product.findByIdAndDelete(prdId);
+    const product = await Product.findByIdAndDelete(prdId);
+    if (!product) res.status(404).json(PRODUCT_NOT_FOUND);
     return res.json(PRODUCT_DELETED);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json(SERVER_ERROR);
   }
 };

@@ -40,11 +40,11 @@
                     const imgUrl = document.getElementById("imgUrl").value;
                     const description = document.getElementById("description").value;
                     const _id = `<%- product._id %>`;
-                    fetch("/admin/products", {
+                    fetch(`/admin/products/${_id}`, {
                         method: "PUT", headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify({ _id, title, qty, price, description, imgUrl }),
+                        body: JSON.stringify({ title, qty, price, description, imgUrl }),
                     }).then(response =>
                         response.json().then(data => ({ "status": response.status, "ok": response.ok, data }))
                     ).then(result => {
