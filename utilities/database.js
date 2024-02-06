@@ -9,7 +9,7 @@ function mongoDBConnect() {
       console.log("mongo db connected");
     })
     .catch((e) => {
-      console.log("mongo db connection failed :", e);
+      console.error("mongo db connection failed :", e);
       throw e;
     });
 }
