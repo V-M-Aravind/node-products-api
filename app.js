@@ -49,10 +49,17 @@ app.use(express.static(path.join(__dirname, "public")));
 
 //setting body parser for parsing incoming json body from requests
 app.use(bodyParser.json());
+
 //routes
 app.use(userRoutes);
 app.use("/admin", adminRoutes);
 app.use(pageNotFoundRoutes);
+
+/** custom error handling function route*/
+app.use((error, req, res, next) => {
+  const { statusCode, statusText = "", message, reason = {} } = error;
+  return res.status(statusCode).json({ statusText, message, reason });
+});
 
 mongoDBConnect()
   .then((client) => {

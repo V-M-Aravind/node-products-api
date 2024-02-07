@@ -13,7 +13,10 @@ const getUpdateFinalProductPage = async (req, res) => {
     return res.render("update-product-final", { product: product });
   } catch (error) {
     console.error(error);
-    return res.render("update-product-final", { product: null });
+    if (error?.message.startsWith("Cast to ObjectId failed for value")) {
+      return res.render("update-product-final", { product: null });
+    }
+    return res.render("500Page");
   }
 };
 

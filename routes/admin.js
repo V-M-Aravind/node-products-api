@@ -183,6 +183,7 @@ router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
  *             schema:
  *               $ref: '#/components/schemas/ServerError'
  */
+
 router.route("/products").post(productController.addProduct);
 router
   .route("/products/:id")
