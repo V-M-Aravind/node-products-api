@@ -10,10 +10,62 @@
 </head>
 
 <body>
-    <main class="container"><br>
-        <h2>Welcome to Node Products API</h2>
-        <p>Add product documentation about the views you have and link to swagger documentation</p>
+    <header>Node Express Product API</header>
+    <main class="main"><br>
+        <h2 class="main-heading"><span>Product Management API</span><a href="#">Swagger Documentation</a></h2>
+        <p class="main-content">Welcome to the Product Management API! This API allows you to manage product data
+            efficiently. Below, you'll
+            find detailed information on how to interact with the API endpoints, authentication, validation, and more.
+        </p>
+        <p class="main-content">This application is built using </p>
+        <ol>
+            <li>NodeJS, ExpressJs</li>
+            <li>EJS template</li>
+            <li>JsonWebToken</li>
+            <li>Yup</li>
+            <li>Helmet</li>
+            <li>Swagger</li>
+            <li>MongoDB Mongoose</li>
+        </ol>
     </main>
+    <section class="section">
+        <h3>Swagger Documentation</h3>
+        <p class="section-content">For detailed information on each endpoint, request and response payloads, refer to
+            the Swagger documentation
+            provided at:
+            <span>https://your-domain.com/api-docs</span>
+        </p>
+    </section>
+    <section class="section">
+        <h3>Base URL</h3>
+        <p class="section-content">The base URL for accessing the API is:
+            <span>https://your-domain.com/api</span>
+        </p>
+        <div>
+            <h4>Authentication</h4>
+            <p class="section-content">To access certain endpoints such as adding, updating, or deleting products, you
+                need to authenticate
+                using JSON Web Tokens (JWT). Obtain a JWT token by signing in as an admin.</p>
+        </div>
+        <p class="section-content">Detailed information regarding endpoints are mentoined in swagger documentation</p>
+
+    </section>
+    <section class="section">
+        <h3>Server-Side Validation</h3>
+        <p class="section-content">Request payloads for adding and updating products are validated on the server side to
+            ensure data integrity.
+            Validation errors will be returned with appropriate error messages.
+        </p>
+    </section>
+    <section class="section">
+        <h3>Data Storage</h3>
+        <p class="section-content">Data is stored in MongoDB</p>
+    </section>
+    <section class="section">
+        <h3>Security Headers</h3>
+        <p class="section-content">For enhanced security, this API sets secure response headers using the helmet
+            package.</p>
+    </section>
 
 </body>
 

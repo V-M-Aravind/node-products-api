@@ -4,6 +4,7 @@ const path = require("path");
 const dotenv = require("dotenv");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const helmet = require("helmet");
 const isAuthenticated = require("./middlewares/isAuthenticated");
 
 const bodyParser = require("body-parser");
@@ -56,6 +57,9 @@ app.use(bodyParser.json());
 
 //setting cors headers
 app.use(corsMiddleware);
+
+//setting http response headers using helmet
+app.use(helmet());
 
 //routes
 app.use(userRoutes);
