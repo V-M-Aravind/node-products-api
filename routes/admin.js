@@ -1,15 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const productController = require("../controller/productController");
-const adminController = require("../controller/adminController");
-
-router.get("/add-product", adminController.getAddProductPage);
-router.get("/update-product", adminController.getUpdateInitialProductPage);
-router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
 
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
  *   schemas:
  *     ProductBody:
  *       type: object
@@ -46,47 +46,62 @@ router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
  *       type: object
  *       required:
  *         - message
- *         - status
+ *         - statusText
  *       properties:
  *         message:
  *           type: string
  *           description: Error message
- *         status:
+ *         statusText:
  *           type: string
  *           description: Error status
  *       example:
  *           message: Something went wrong
- *           status: SERVER_ERROR
+ *           statusText: SERVER_ERROR
  *     ProductDeleted:
  *       type: object
  *       required:
  *         - message
- *         - status
+ *         - statusText
  *       properties:
  *         message:
  *           type: string
  *           description: Product deleted message
- *         status:
+ *         statusText:
  *           type: string
  *           description: success status for deletion
  *       example:
  *           message: Product Successfully Deleted
- *           status: PRODUCT_DELETED
+ *           statusText: PRODUCT_DELETED
  *     ProductNotFound:
  *       type: object
  *       required:
  *         - message
- *         - status
+ *         - statusText
  *       properties:
  *         message:
  *           type: string
  *           description: Product not found error
- *         status:
+ *         statusText:
  *           type: string
  *           description: Product not found error status
  *       example:
  *           message: Product not found
- *           status: PRODUCT_NOT_FOUND
+ *           statusText: PRODUCT_NOT_FOUND
+ *     UnAuthorizedError:
+ *       type: object
+ *       required:
+ *         - message
+ *         - statusText
+ *       properties:
+ *         message:
+ *           type: string
+ *           description: JWT token error
+ *         statusText:
+ *           type: string
+ *           description: Unauthorized error status
+ *       example:
+ *           message: Unauthorized Error
+ *           statusText: UNAUTHORIZED_ERROR
  *
  *
  */
@@ -95,6 +110,8 @@ router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
  * @swagger
  * /admin/products:
  *   post:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Add a product
  *     tags: [Products]
  *     requestBody:
@@ -111,6 +128,12 @@ router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Product'
+ *       401:
+ *         description: unauthorized error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UnAuthorizedError'
  *       500:
  *         description: Some server error
  *         content:
@@ -120,6 +143,8 @@ router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
  *
  * /admin/products/{productId}:
  *   put:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Update product
  *     tags: [Products]
  *     parameters:
@@ -155,6 +180,8 @@ router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
  *             schema:
  *               $ref: '#/components/schemas/ServerError'
  *   delete:
+ *     security:
+ *       - bearerAuth: []
  *     summary: Delete product
  *     tags: [Products]
  *     parameters:
@@ -183,6 +210,7 @@ router.get("/update-product/:id", adminController.getUpdateFinalProductPage);
  *             schema:
  *               $ref: '#/components/schemas/ServerError'
  */
+
 router.route("/products").post(productController.addProduct);
 router
   .route("/products/:id")
