@@ -54,7 +54,7 @@ const router = express.Router();
  *               properties:
  *                 message:
  *                   type: string
- *                 statusCode:
+ *                 statusText:
  *                   type: string
  *                 token:
  *                   type: string

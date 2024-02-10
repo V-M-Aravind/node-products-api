@@ -1,0 +1,46 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+header{
+    height: 5rem;
+    font-size: 3rem;
+    background-color: black;
+    color: white;
+    padding: 1rem 2rem;
+    text-align: left;
+    margin-bottom: 2rem;
+}
+
+body{
+    background-color: rgb(223, 227, 229);
+}
+section,.main{
+    margin: 2rem 0;
+    padding: 0 2rem;
+}
+h3{
+    margin: 1rem 0;
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+h4{ margin: 1rem 0;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+.main-heading{
+    padding: 1rem 0;
+    display: flex;
+    column-gap: 2rem;
+    font-size: 1.8rem;
+}
+.main-content, .section-content{
+    margin-bottom: 1rem;
+    font-size: 1.4rem;
+}
+.main > ol{
+    font-size: 1.2rem;
+    margin-left: 2rem;
+}

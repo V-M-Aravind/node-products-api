@@ -25,7 +25,11 @@ const postSignIn = (req, res, next) => {
           }
         );
         req.userId = adminUser._id.toString();
-        return res.json({ message: "Login Success", statusCode: 200, token });
+        return res.json({
+          message: "Login Success",
+          statusText: "AUTH_SUCCESS",
+          token,
+        });
       } else {
         const err = new CustomError(
           "Password is incorrect",

@@ -102,7 +102,21 @@ const productController = require("../controller/productController");
  *       example:
  *           message: Unauthorized Error
  *           statusText: UNAUTHORIZED_ERROR
- *
+ *     ValidationError:
+ *       type: object
+ *       required:
+ *         - message
+ *         - statusText
+ *       properties:
+ *         message:
+ *           type: string
+ *           description: validation error
+ *         statusText:
+ *           type: string
+ *           description: validation error status
+ *       example:
+ *           message: Validation Error
+ *           statusText: VALIDATION_ERROR
  *
  */
 
@@ -128,6 +142,12 @@ const productController = require("../controller/productController");
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  *       401:
  *         description: unauthorized error
  *         content:
@@ -167,6 +187,12 @@ const productController = require("../controller/productController");
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Product'
+ *       400:
+ *         description: validation error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ValidationError'
  *       404:
  *         description: Product not found
  *         content:
