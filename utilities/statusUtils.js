@@ -55,6 +55,11 @@ function getSessionExpiredError() {
   );
   return error;
 }
+function getValidationError(message) {
+  message = message || "Request body validation failed";
+  const error = new CustomError(message, 400, "VALIDATION ERROR");
+  return error;
+}
 
 module.exports = {
   getProductNotFoundError,
@@ -64,4 +69,5 @@ module.exports = {
   getAuthenticationError,
   getSessionExpiredError,
   getUnAuthorizedError,
+  getValidationError,
 };

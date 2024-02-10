@@ -1,9 +1,15 @@
+const mongoose = require("mongoose");
+const yup = require("yup");
 const Product = require("../models/product");
 const statusUtils = require("../utilities/statusUtils");
-const mongoose = require("mongoose");
+const productSchema = require("../validators/productValidator");
 
-const { getProductNotFoundError, getServerError, PRODUCT_DELETED_MSG } =
-  statusUtils;
+const {
+  getProductNotFoundError,
+  getServerError,
+  PRODUCT_DELETED_MSG,
+  getValidationError,
+} = statusUtils;
 const getAllProducts = async (_, res, next) => {
   try {
     const products = await Product.find();
@@ -42,18 +48,27 @@ const getProductById = async (req, res, next) => {
 };
 
 const addProduct = async (req, res, next) => {
+  const productBody = {
+    title: req.body.title,
+    price: req.body.price,
+    qty: req.body.qty,
+    imgUrl: req.body.imgUrl,
+    description: req.body.description,
+  };
+
   try {
+    await productSchema.validate(productBody, {
+      strict: true,
+    });
     const product = await Product.create({
-      title: req.body.title,
-      price: req.body.price,
-      qty: req.body.qty,
-      imgUrl: req.body.imgUrl,
-      description: req.body.description,
+      ...productBody,
     });
     res.status(201).json(product);
   } catch (err) {
     console.error(err);
-    if (!err.statusCode) {
+    if (err instanceof yup.ValidationError) {
+      err = getValidationError(err.message);
+    } else if (!err.statusCode) {
       err = getServerError();
     }
     next(err);
@@ -63,21 +78,37 @@ const addProduct = async (req, res, next) => {
 const updateProduct = async (req, res, next) => {
   try {
     const prdId = req.params.id;
+    if (!mongoose.Types.ObjectId.isValid(prdId)) {
+      const err = getProductNotFoundError();
+      throw err;
+    }
     let product = await Product.findById(prdId);
     if (!product) {
       const err = getProductNotFoundError();
       throw err;
     }
-    product.title = req.body.title;
-    product.price = req.body.price;
-    product.qty = req.body.qty;
-    product.imgUrl = req.body.imgUrl;
-    product.description = req.body.description;
+    const productBody = {
+      title: req.body.title,
+      price: req.body.price,
+      qty: req.body.qty,
+      imgUrl: req.body.imgUrl,
+      description: req.body.description,
+    };
+    await productSchema.validate(productBody, {
+      strict: true,
+    });
+    product.title = productBody.title;
+    product.price = productBody.price;
+    product.qty = productBody.qty;
+    product.imgUrl = productBody.imgUrl;
+    product.description = productBody.description;
     await product.save();
     res.json(product);
   } catch (err) {
     console.error(err);
-    if (!err.statusCode) {
+    if (err instanceof yup.ValidationError) {
+      err = getValidationError(err.message);
+    } else if (!err.statusCode) {
       err = getServerError();
     }
     throw err;
