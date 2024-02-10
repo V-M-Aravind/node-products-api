@@ -36,7 +36,10 @@ const options = {
     },
     servers: [
       {
-        url: "http://localhost:3000",
+        url:
+          process.env.NODE_ENV === "production"
+            ? "https://node-products-api-vma.onrender.com/"
+            : "http://localhost:3000",
       },
     ],
   },
