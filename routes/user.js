@@ -1,6 +1,6 @@
 const express = require("express");
 const productController = require("../controller/productController");
-const userController = require("../controller/userController");
+const homePageController = require("../controller/homePageController");
 
 const router = express.Router();
 
@@ -51,7 +51,7 @@ const router = express.Router();
  *   description: The Products managing API
  */
 
-router.get("/", userController.getHomePage);
+router.get("/", homePageController.getHomePage);
 
 /**
  * @swagger

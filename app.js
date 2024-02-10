@@ -4,11 +4,15 @@ const path = require("path");
 const dotenv = require("dotenv");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
+const isAuthenticated = require("./middlewares/isAuthenticated");
 
 const bodyParser = require("body-parser");
 const userRoutes = require("./routes/user");
 const adminRoutes = require("./routes/admin");
+const authRoutes = require("./routes/auth");
 const pageNotFoundRoutes = require("./routes/pageNotFound");
+const corsMiddleware = require("./middlewares/cors");
+const errorHandler = require("./middlewares/errorhandler");
 
 dotenv.config();
 const app = express();
@@ -50,16 +54,17 @@ app.use(express.static(path.join(__dirname, "public")));
 //setting body parser for parsing incoming json body from requests
 app.use(bodyParser.json());
 
+//setting cors headers
+app.use(corsMiddleware);
+
 //routes
 app.use(userRoutes);
-app.use("/admin", adminRoutes);
+app.use("/admin", authRoutes);
+app.use("/admin", isAuthenticated, adminRoutes);
 app.use(pageNotFoundRoutes);
 
 /** custom error handling function route*/
-app.use((error, req, res, next) => {
-  const { statusCode, statusText = "", message, reason = {} } = error;
-  return res.status(statusCode).json({ statusText, message, reason });
-});
+app.use(errorHandler);
 
 mongoDBConnect()
   .then((client) => {
