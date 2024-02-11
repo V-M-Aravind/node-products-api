@@ -21,14 +21,8 @@ let productSchema = yup.object({
   description: yup
     .string("Description must be of type string")
     .required()
-    .min(
-      20,
-      "Description must contain minimum of 20 characters and maximum of 50 characters"
-    )
-    .max(
-      50,
-      "Description must contain minimum of 20 characters and maximum of 50 characters"
-    ),
+    .min(15, "Description must contain minimum of 15 characters")
+    .max(400, "Description must not exceed maximum of 400 characters"),
 });
 
 module.exports = productSchema;

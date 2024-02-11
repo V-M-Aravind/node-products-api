@@ -60,6 +60,14 @@ function getValidationError(message) {
   const error = new CustomError(message, 400, "VALIDATION ERROR");
   return error;
 }
+function getSpecialAdminPrivilegeError() {
+  const error = new CustomError(
+    "You dont have permission to do operations on RESERVED PRODUCTS. Please add a new product and do required operations on the newly added product",
+    403,
+    "RESERVED_PRODUCT_ERROR"
+  );
+  return error;
+}
 
 module.exports = {
   getProductNotFoundError,
@@ -70,4 +78,5 @@ module.exports = {
   getSessionExpiredError,
   getUnAuthorizedError,
   getValidationError,
+  getSpecialAdminPrivilegeError,
 };
