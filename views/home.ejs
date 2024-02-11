@@ -12,8 +12,7 @@
 <body>
     <header>Node Express Product API</header>
     <main class="main"><br>
-        <h2 class="main-heading"><span>Product Management API</span><a
-                href="https://node-products-api-vma.onrender.com/api-docs/">Swagger Documentation</a></h2>
+        <h2 class="main-heading">Product Management API</h2>
         <p class="main-content">Welcome to the Product Management API! This API allows you to manage product data
             efficiently. Below, you'll
             find detailed information on how to interact with the API endpoints, authentication, validation, and more.
@@ -30,7 +29,28 @@
         </ol>
     </main>
     <section class="section">
-        <h3>Swagger Documentation</h3>
+        <h3>Base URL</h3>
+        <p class="section-content">The base URL for accessing the API is:
+            <a href="https://node-products-api-vma.onrender.com">Node-products-API</a>
+        </p>
+        <div>
+            <h4>Authentication</h4>
+            <p class="section-content">To access certain endpoints such as adding, updating, or deleting products, you
+                need to authenticate
+                using JSON Web Tokens (JWT). Obtain a JWT token by signing in as an admin.</p>
+            <p class="section-content--cred">Username : <b>admin</b></p>
+            <p class="section-content--cred">Password : <b>adminPassword</b></p>
+            <p class="section-content--note">Keep in mind that , with these admin credentials, you are only allowed to
+                create , update or delete the
+                newly created products by you. You don't have the privileges to delete the existing 5 products in the
+                API.</p>
+        </div>
+        <p class="section-content">Detailed information regarding endpoints are mentoined in swagger documentation</p>
+
+    </section>
+    <section class="section">
+        <h3><a class="section-heading--anchor" href="https://node-products-api-vma.onrender.com/api-docs/">Swagger
+                Documentation</a></h3>
         <p class="section-content">For detailed information on each endpoint, request and response payloads, refer to
             the Swagger documentation
             provided at:
@@ -38,24 +58,11 @@
                 href="https://node-products-api-vma.onrender.com/api-docs/">https://node-products-api-vma.onrender.com/api-docs/</a>
         </p>
     </section>
-    <section class="section">
-        <h3>Base URL</h3>
-        <p class="section-content">The base URL for accessing the API is:
-            <a href="https://node-products-api-vma.onrender.com"></a>
-        </p>
-        <div>
-            <h4>Authentication</h4>
-            <p class="section-content">To access certain endpoints such as adding, updating, or deleting products, you
-                need to authenticate
-                using JSON Web Tokens (JWT). Obtain a JWT token by signing in as an admin.</p>
-        </div>
-        <p class="section-content">Detailed information regarding endpoints are mentoined in swagger documentation</p>
 
-    </section>
     <section class="section">
         <h3>Server-Side Validation</h3>
         <p class="section-content">Request payloads for adding and updating products are validated on the server side to
-            ensure data integrity.
+            ensure data integrity with the help of Yup package.
             Validation errors will be returned with appropriate error messages.
         </p>
     </section>
@@ -70,9 +77,12 @@
     </section>
     <section class="section">
         <h3>Deployement</h3>
-        <p class="section-content">Application is deployed in Render Hoisting Provider </p>
+        <p class="section-content">Application is deployed in Render Hoisting Provider. </p>
     </section>
 
 </body>
+<footer>©2024 Node-Product-API. All rights reserved.
+    <p>Author: V M Aravind</p>
+</footer>
 
 </html>

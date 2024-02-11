@@ -9,7 +9,15 @@ const {
   getServerError,
   PRODUCT_DELETED_MSG,
   getValidationError,
+  getSpecialAdminPrivilegeError,
 } = statusUtils;
+const reservedProductsIdArray = [
+  "65c8637d12fe0f749df9a1b7",
+  "65c8644da5e926d0a0de9442",
+  "65c8650da5e926d0a0de9444",
+  "65c86592370532c0a7dd0605",
+  "65c865f4370532c0a7dd0607",
+];
 const getAllProducts = async (_, res, next) => {
   try {
     const products = await Product.find();
@@ -82,6 +90,10 @@ const updateProduct = async (req, res, next) => {
       const err = getProductNotFoundError();
       throw err;
     }
+    if (reservedProductsIdArray.find((resPrdId) => resPrdId === prdId)) {
+      const err = getSpecialAdminPrivilegeError();
+      throw err;
+    }
     let product = await Product.findById(prdId);
     if (!product) {
       const err = getProductNotFoundError();
@@ -111,7 +123,7 @@ const updateProduct = async (req, res, next) => {
     } else if (!err.statusCode) {
       err = getServerError();
     }
-    throw err;
+    next(err);
   }
 };
 
@@ -120,6 +132,10 @@ const deleteProduct = async (req, res, next) => {
     const prdId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(prdId)) {
       const err = getProductNotFoundError();
+      throw err;
+    }
+    if (reservedProductsIdArray.find((resPrdId) => resPrdId === prdId)) {
+      const err = getSpecialAdminPrivilegeError();
       throw err;
     }
     const product = await Product.findByIdAndDelete(prdId);

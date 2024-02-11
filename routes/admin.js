@@ -117,7 +117,21 @@ const productController = require("../controller/productController");
  *       example:
  *           message: Validation Error
  *           statusText: VALIDATION_ERROR
- *
+ *     ReservedProductError:
+ *       type: object
+ *       required:
+ *         - message
+ *         - statusText
+ *       properties:
+ *         message:
+ *           type: string
+ *           description: Reserved products error
+ *         statusText:
+ *           type: string
+ *           description: Reserved products error
+ *       example:
+ *           message: You dont have permission to do operations on RESERVED PRODUCTS. Please add a new product and do required operations on the newly added product
+ *           statusText: RESERVED_PRODUCT_ERROR
  */
 
 /**
@@ -193,6 +207,12 @@ const productController = require("../controller/productController");
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ValidationError'
+ *       403:
+ *         description: Reserved Products Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ReservedProductError'
  *       404:
  *         description: Product not found
  *         content:
@@ -223,6 +243,12 @@ const productController = require("../controller/productController");
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ProductDeleted'
+ *       403:
+ *         description: Reserved Products Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ReservedProductError'
  *       404:
  *         description: Product not found
  *         content:
